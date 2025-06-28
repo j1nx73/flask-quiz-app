@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Question</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .question-card {
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+            padding: 2.5rem 2rem;
+            background: #fff;
+            max-width: 600px;
+            width: 100%;
+        }
+        .progress {
+            height: 1.2rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .option-label {
+            transition: background 0.2s, color 0.2s;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .form-check-input:checked + .form-check-label, .form-check-input:focus + .form-check-label {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        .form-check-input {
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="question-card mx-auto">
+        <div class="mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="text-muted">Question {{ index }} of {{ total }}</span>
+                <span><i class="fas fa-question-circle text-primary"></i></span>
+            </div>
+            <div class="progress">
+                <div class="progress-bar bg-primary" role="progressbar" style="width: {{ (index/total)*100 }}%" aria-valuenow="{{ index }}" aria-valuemin="0" aria-valuemax="{{ total }}"></div>
+            </div>
+        </div>
+        <h4 class="mb-4 font-weight-bold">{{ question.text }}</h4>
+        <form method="post">
+            {% if question.type == 'short_answer' %}
+                <div class="form-group">
+                    <label for="answer">Your Answer:</label>
+                    <input type="text" id="answer" name="answer" class="form-control form-control-lg" required>
+                </div>
+            {% elif question.type == 'single_choice' %}
+                {% for option in question.options %}
+                    <div class="form-check">
+                        <input type="radio" name="options" value="{{ option.id }}" class="form-check-input" id="option{{ option.id }}" required>
+                        <label class="form-check-label option-label" for="option{{ option.id }}">{{ option.text }}</label>
+                    </div>
+                {% endfor %}
+            {% elif question.type == 'multiple_choice' %}
+                {% for option in question.options %}
+                    <div class="form-check">
+                        <input type="checkbox" name="options" value="{{ option.id }}" class="form-check-input" id="option{{ option.id }}">
+                        <label class="form-check-label option-label" for="option{{ option.id }}">{{ option.text }}</label>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <button type="submit" class="btn btn-primary btn-block btn-lg mt-4">Next <i class="fas fa-arrow-right"></i></button>
+        </form>
+    </div>
+</body>
+</html>

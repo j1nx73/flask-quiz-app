@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Question</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        function toggleOptions() {
+            var type = document.getElementById('type').value;
+            document.getElementById('options-section').style.display = (type === 'short_answer') ? 'none' : 'block';
+        }
+    </script>
+</head>
+<body onload="toggleOptions()">
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Add New Question</h2>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary">Back to Dashboard</a>
+        </div>
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        <form method="post">
+            <div class="form-group">
+                <label for="text">Question Text</label>
+                <input type="text" class="form-control" id="text" name="text" required>
+            </div>
+            <div class="form-group">
+                <label for="type">Type</label>
+                <select class="form-control" id="type" name="type" onchange="toggleOptions()" required>
+                    <option value="single_choice">Single Choice</option>
+                    <option value="multiple_choice">Multiple Choice</option>
+                    <option value="short_answer">Short Answer</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="difficulty">Difficulty</label>
+                <select class="form-control" id="difficulty" name="difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <input type="text" class="form-control" id="category" name="category" required>
+            </div>
+            <div class="form-group" id="options-section">
+                <label>Options (for choice questions):</label>
+                <div id="options-list">
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" name="option_text_1" placeholder="Option 1">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <input type="checkbox" name="option_correct_1"> Correct
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" name="option_text_2" placeholder="Option 2">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <input type="checkbox" name="option_correct_2"> Correct
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" name="option_text_3" placeholder="Option 3">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <input type="checkbox" name="option_correct_3"> Correct
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" name="option_text_4" placeholder="Option 4">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <input type="checkbox" name="option_correct_4"> Correct
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="correct_answer">Correct Answer (for short answer)</label>
+                <input type="text" class="form-control" id="correct_answer" name="correct_answer">
+            </div>
+            <div class="form-group">
+                <label for="explanation">Explanation</label>
+                <textarea class="form-control" id="explanation" name="explanation" rows="2"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Add Question</button>
+        </form>
+    </div>
+</body>
+</html> 

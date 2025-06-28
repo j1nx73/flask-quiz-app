@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .results-card {
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+            padding: 2.5rem 2rem;
+            background: #fff;
+            max-width: 500px;
+            width: 100%;
+        }
+        .score-icon {
+            font-size: 3rem;
+        }
+        .incorrect-list {
+            background: #fff3cd;
+            border-radius: 1rem;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="results-card mx-auto">
+        <div class="text-center mb-4">
+            {% if score == total %}
+                <i class="fas fa-trophy text-warning score-icon"></i>
+            {% elif score >= total // 2 %}
+                <i class="fas fa-star text-primary score-icon"></i>
+            {% else %}
+                <i class="fas fa-times-circle text-danger score-icon"></i>
+            {% endif %}
+            <h1 class="card-title mt-3">Quiz Results</h1>
+            <p class="lead">Your Score: <span class="font-weight-bold">{{ score }} / {{ total }}</span></p>
+        </div>
+        {% if incorrect_questions %}
+            <h5 class="mb-3">Incorrect Answers</h5>
+            <div class="incorrect-list mb-3">
+                <ul class="list-unstyled mb-0">
+                    {% for question in incorrect_questions %}
+                        <li class="mb-3">
+                            <p class="mb-1"><strong><i class="fas fa-question-circle text-warning"></i> {{ question.text }}</strong></p>
+                            <p class="mb-0 text-muted"><em>Explanation:</em> {{ question.explanation }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <a href="{{ url_for('home') }}" class="btn btn-primary btn-block btn-lg mt-3"><i class="fas fa-home"></i> Back to Home</a>
+    </div>
+</body>
+</html>

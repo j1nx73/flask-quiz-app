@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .quiz-card {
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+            padding: 2.5rem 2rem;
+            background: #fff;
+            max-width: 400px;
+            width: 100%;
+        }
+        .quiz-header {
+            font-weight: 700;
+            font-size: 2.2rem;
+            letter-spacing: -1px;
+            color: #2d3748;
+        }
+        .admin-link {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('admin_login') }}" class="btn btn-outline-secondary admin-link"><i class="fas fa-user-shield"></i> Admin Login</a>
+    <div class="quiz-card mx-auto">
+        <div class="text-center mb-4">
+            <i class="fas fa-graduation-cap fa-3x mb-3 text-primary"></i>
+            <div class="quiz-header">Welcome to the Quiz App</div>
+            <div class="text-muted mt-2">Test your knowledge in various categories!</div>
+        </div>
+        <form method="post" action="{{ url_for('start_quiz') }}">
+            <div class="form-group">
+                <label for="num_questions" class="font-weight-bold">Number of Questions</label>
+                <input type="number" id="num_questions" name="num_questions" min="1" max="20" value="10" class="form-control form-control-lg" style="max-width: 120px; margin: 0 auto;">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-lg mt-4"><i class="fas fa-play"></i> Start Quiz</button>
+        </form>
+    </div>
+</body>
+</html>
